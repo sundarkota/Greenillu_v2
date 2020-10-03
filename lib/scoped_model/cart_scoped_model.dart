@@ -263,6 +263,34 @@ class CartScopedModel extends Model {
     saveCartToPref(cartItems: cartLineItems);
   }
 
+  void removeCartItem(Product cartItem, qty) async {
+    Cart cartData = await addCartInSer(cartItem, qty);
+    cartItem.cartItems = cartData;
+    List<Product> cartLineItems = await getCart();
+
+    if (false) { //cartItem.cartItems != null && cartItem.cartItems.variation != ""
+      printApp("add to cart loop 1");
+      if (cartLineItems.firstWhere(
+              (i) => (i.productId == cartItem.productId &&
+              i.cartItems.variation == cartItem.cartItems.variation),
+          orElse: () => null) !=
+          null) {
+        return;
+      }
+    } else {
+      printApp("add to cart loop 2");
+      var firstCartItem = cartLineItems.firstWhere(
+              (i) => i.productId == cartItem.productId,
+          orElse: () => null);
+      if (firstCartItem != null) {
+        return;
+      }
+
+    }
+    cartLineItems.remove(cartItem);
+    saveCartToPref(cartItems: cartLineItems);
+  }
+
   void saveCartToPref({List<Product> cartItems}) {
     SharedPref sharedPref = SharedPref();
 

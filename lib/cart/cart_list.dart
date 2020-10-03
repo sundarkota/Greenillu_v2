@@ -19,6 +19,7 @@ import 'package:greenillu/scoped_model/cart_scoped_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:greenillu/utils/functions.dart';
 import 'package:greenillu/utils/format.dart';
+//import 'package:greenillu/cart/cart_footer.dart';
 
 
 class CartListPage extends StatelessWidget {
@@ -55,6 +56,9 @@ class CartListPage extends StatelessWidget {
         ),
         drawer: AppDrawer(), //menu
         body: CartsListPageBody(),
+       // bottomNavigationBar: BottomBarButton(),//placeOrder(), Cartfooter(), //
+            //child: BottomBarButton(),
+        //placeOrder(),//<Widget>[ ],
       ),
     );
   }
@@ -98,9 +102,9 @@ class CartsListPageBody extends StatelessWidget {
       child: cartcount == 0
           ? Center(child: Text("No products available."))
           : ListView.builder(
-        itemCount: cartcount,
+        itemCount: cartcount + 3,
         itemBuilder: (context, index) {
-          print(model.cartsList);
+          print("inex ${index}");
           if (index == cartcount) {
 
             if (model.hasMoreCarts) {
@@ -112,16 +116,23 @@ class CartsListPageBody extends StatelessWidget {
               );
             }
             return Container();
-          }  else {
+          } else if (index == (cartcount + 1)) {
+            return _paymentDetails(screenSize);
+          } else if (index == (cartcount + 2)) {
+            //return _placeOrder(screenSize);
+          }
+          else {
             //1st, 3rd, 5th.. index would contain a row containing 2 products
 
             if (index > cartcount - 1) {
               return Container();
             }
+
+
+
             Product prd = model.cartsList[index];
             prd.cartItems = model.getCartData(model.cartsList[index].productId);
-
-             return ProductsListItem(
+            return ProductsListItem(
               product1: model.cartsList[index],
               //product2: model.productsList[index],
             );
@@ -176,4 +187,28 @@ class CartsListPageBody extends StatelessWidget {
       ),
     );
   }
+
+  _paymentDetails(Size screenSize) {
+    return Container(
+      margin: const EdgeInsets.all(12.0),
+      width: screenSize.width,
+      child: Card(
+        elevation: 4.0,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text("Payment details"),
+              Text("MRP total"),
+              Text("Discount"),
+              Text("Total Amount")
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:greenillu/utils/sharedpref.dart';
 import 'package:greenillu/appconfig/config.dart';
@@ -95,4 +96,39 @@ AnyImage dummyImage(){
       title: "dummy",
       alt: "dummy",
     );
+}
+
+Widget placeOrder() {
+  return  Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Text("Payble amount"),
+        Container(
+          width: 2.0,
+          height: 46.0,
+        ),
+        Text("Place Order")
+      ],
+    );
+
+  /*
+  return BottomNavigationBar(
+    //currentIndex: 0,
+    //onTap: "", //_selectTab,
+    items: [
+      BottomNavigationBarItem(
+         title: Text("Payble amount"), icon: Icon(Icons.shop),
+      ),
+      //BottomNavigationBarItem(
+      //  icon: Icon(Icons.message), title: Text("Message"),
+      //),
+      BottomNavigationBarItem(
+        title: Text("Place order"), icon: Icon(Icons.payment),
+      ),
+    ],
+      type: BottomNavigationBarType.fixed
+  );
+  */
+
 }

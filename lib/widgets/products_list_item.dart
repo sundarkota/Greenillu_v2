@@ -137,7 +137,7 @@ class ProductsListItem extends StatelessWidget {
                       ),
               ),
             ),
-            addToCartWidget(row2, product),
+            addToCartWidget(context, row2, product),
           ],
         ),
     );
@@ -201,13 +201,38 @@ class ProductsListItem extends StatelessWidget {
       ),
     );
   }
-  addToCartWidget(wd, product){
+
+  removeItemCartButton(wd, product){
+    return Flexible(
+      //flex: 3,
+      //fit: FlexFit.loose,
+      child: FlatButton(
+        onPressed: () => { addToCart(product, 1)},
+        color: Colors.green,
+        child: Text(
+          "Remove",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  addToCartWidget(context, wd, product){
+    return GestureDetector(
+   child : (product.cartItems != null)
+          ? addtoCartIncrDecr(wd, product)
+          : addToCartButton(wd, product),
+        onTap: () {
+          (context as Element).markNeedsBuild();
+        }
+     );
+    /*
     if(product.cartItems != null){
       return addtoCartIncrDecr(wd, product);
     }
     else {
       return addToCartButton(wd, product);
-    }
+    }*/
   }
 
       _imageBox(product,wd){
@@ -280,6 +305,7 @@ class ProductsListItem extends StatelessWidget {
     );
   }
 
+
   void addToCart(product,qty) async{
     //CartScopedModel cartModel = CartScopedModel();
 
@@ -304,6 +330,10 @@ class ProductsListItem extends StatelessWidget {
         print(responsec.body);
     //}
 */
+  }
+
+  void removeItem(product,qty) async{
+    await CartScopedModel.getInstance.removeCartItem(product,qty);
   }
 
 }

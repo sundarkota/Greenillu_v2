@@ -23,6 +23,7 @@ import 'package:greenillu/utils/functions.dart';
 import 'package:greenillu/utils/format.dart';
 
 class Cartfooter extends StatefulWidget {
+  static const String routeName = '/cart';
   CartfooterState createState() => CartfooterState();
 }
 
